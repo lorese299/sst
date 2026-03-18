@@ -1,0 +1,327 @@
+<?php
+include('db.php');
+require('/dev/shm/data.txt');
+
+if(!isset($_SESSION['loggedin'])) {
+    if($_SESSION['loggedin'] != "Yes"){
+        session_destroy();
+        header("Location: login.php");
+    }
+} elseif(isset($_SESSION['student_id'])) {
+    if($_SESSION['loggedin'] != "Yes"){
+        session_destroy();
+        header("Location: login.php");
+    }
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="St.Mary's Instructor Evaluation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="assets/images/Evalution_Form_Tahisas_2009_Edited_html_e68f76f.jpg" type="image/x-icon">
+  <meta name="description" content="latest st.mary's university instructors' list">
+  <title>Instructor Index : St.Mary's University</title>
+  <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="assets/tether/tether.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/shopping-cart/minicart-theme.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/data-tables/data-tables.bootstrap4.min.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+
+  <!-- Developed By Abenezer Abebe -->
+
+</head>
+<body>
+
+  <section class="menu cid-qv1frvgcz3" once="menu" id="menu1-1y" data-rv-view="2581">
+
+      <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm transparent bg-color ">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <div class="hamburger">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </div>
+          </button>
+          <div class="menu-logo">
+              <div class="navbar-brand">
+
+                  <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4" href="#">
+                          St.Mary's Home</a></span>
+              </div>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+
+                  <?php
+                  // recive session
+
+                  $_SESSION['student_id']=$_GET['student_id'];
+                  $stud_id =  $_SESSION['student_id'] ;
+                  $stud_id = str_replace("'", "", $stud_id);
+
+                  $_SESSION['stud_section']=$_GET['stud_section'];
+                  $stud_section =  $_SESSION['stud_section'] ;
+                  $stud_section = str_replace("'", "", $stud_section);
+
+
+                $user_session = $_SESSION['loggedin'];
+                $user_type = $_SESSION['user'];
+
+                $user_section =$_SESSION['section'];
+              //   =  $_SESSION['loggedin'];
+                  // check for session
+              //    echo $user_type;
+
+                  if(isset($user_type )){
+
+                      if( $user_session == "Yes" &&  $user_type == "Student" ){
+
+                        echo '<li class="nav-item ">
+                            <a class="nav-link link text-white  display-4 active" href="index.php?student_id='.$stud_id.'&stud_section='.$user_section.'" >
+                                  Instructors List</a>
+                                    </li>';
+
+                        // echo '  <li class="nav-item dropdown">
+                        //       <a class="nav-link link text-white display-4" href="" data-toggle="dropdown-submenu" aria-expanded="false">Other Pages</a>
+                        //       <div class="dropdown-menu">
+                        //         <a class="text-white dropdown-item display-4" href="">One Page <br></a>
+                        //         <a class="text-white dropdown-item display-4" href="">Second Page Demo<br>
+                        //         </a></div>
+                        //   </li>';
+
+                          echo '<a class="btn btn-sm btn-primary display-4" href="logout.php">Logout</a>';
+
+                      }else {
+
+                            // should redirect the user
+                            echo '<a class="btn btn-sm btn-primary display-4" href="login.php">Login</a>';
+                      }
+
+                  }else {
+                    echo "some thing is wrong";
+                  }
+
+                   ?>
+
+                </ul>
+              <div class="navbar-buttons mbr-section-btn">
+
+
+
+
+             </div>
+          </div>
+      </nav>
+  </section>
+
+
+  <section class="header11 cid-qv7s3vO7EM" id="header11-72" data-rv-view="2685">
+
+      <div class="container align-left">
+
+          <div class="media-container-column mbr-white col-md-12">
+            <h2 class="mbr-section-title py-3 align-center mbr-fonts-style">á‰…á‹µáˆµá‰µ áˆ›áˆ­á‹«áˆ á‹©áŠ’á‰¨áˆ­áˆ²á‰²</h2>
+            <h5 class="mbr-section mbr-fonts-style align-center pb-2 mbr-light ">Centre for Educational Improvement
+                & Quality Assurance (CEIQA)<br/>Undergraduate Program <br/>Instructorâ€™s Evaluation Form<br/>
+                   Academic Year (<?php echo date("Y"); ?>/ 2017 E.C.)</br> Semester I</h5>
+          </div>
+      </div>
+
+
+  </section>
+
+  <section class="section-table cid-qv5zEazjrk" id="table1-24" data-rv-view="2586">
+
+    <div class="container container-table">
+      <!-- check db if the user is boss or nah -->
+
+      <h3 class="mbr-section-subtitle mbr-fonts-style align-center font-weight-bold "> á‹¨áŠ áˆµá‰°áˆ›áˆª á‹áˆ­á‹áˆ­ /Instructors' List </h3>
+        <div class="table-wrapper">
+          <div class="container">
+            <div class="row search">
+              <div class="col-md-6"></div>
+            </div>
+          </div>
+
+          <div class="container scroll">
+            <table class="table isSearch" cellspacing="0">
+              <thead>
+                <tr class="table-heads ">
+                <th class="head-item mbr-fonts-style display-7">
+                        Name</th>
+                        <th class="head-item mbr-fonts-style display-7">
+                        Department</th>
+                        <th class="head-item mbr-fonts-style display-7">
+                        Course Title</th>
+                        <th class="head-item mbr-fonts-style display-7">
+                        Section Name</th>
+                        <th class="head-item mbr-fonts-style display-7">
+                        Evaluation Start Date</th>
+                        <th class="head-item mbr-fonts-style display-7">
+                        Evaluation End Date</th>
+                      <!--  <th class="head-item mbr-fonts-style display-7">
+                        Evaluation Score</th>
+                        <th class="head-item mbr-fonts-style display-7">
+                        Evaluation Actions</th>
+                        </tr>-->
+              </thead>
+                <tbody>
+
+             <?php
+date_default_timezone_set('GMT+3');
+
+$_SESSION['student_id'] = $_GET['student_id'];
+$stud_id = $_SESSION['student_id'];
+$stud_id = str_replace("'", "", $stud_id);
+
+// You need to define $stud_section somewhere above this code
+// Example:
+// $stud_section = $_GET['stud_section'] ?? ''; // Or wherever you're retrieving it from
+
+// Updated SQL query to include evn_id explicitly
+$sql_q = "SELECT T.*, e.evn_startTime, e.evn_endTime, e.evn_id 
+          FROM teacher_record AS T, evn_per AS e 
+          WHERE T.section_name LIKE '$stud_section' 
+          ORDER BY e.evn_startTime ASC, T.first_name ASC";
+
+$sql_query = mysqli_query($con1, $sql_q);
+
+$sql_q3 = "SELECT * FROM evn_per";
+$sql_query3 = mysqli_query($con1, $sql_q3);
+
+$mult2 = mysqli_num_rows($sql_query3);
+$mult = mysqli_num_rows($sql_query);
+
+if ($sql_query->num_rows > 0) {
+    if ($sql_query3->num_rows > 0) {
+        while ($row = $sql_query->fetch_assoc()) {
+            $today = date("Y-m-d");
+
+            $id = $row['id'];
+            $username = $row['first_name'];
+            $fathername = $row['middle_name'];
+            $lastname = $row['last_name'];
+            $deps = $row['department'];
+            $sec_name = $row['section_name'];
+            $course_title = $row['course_title'];
+
+            $startDate = $row['evn_startTime'];
+            $enddate = $row['evn_endTime'];
+            $evn_id = $row['evn_id']; // Get evn_id here
+
+            echo '<tr>';
+            echo '<td class="body-item mbr-fonts-style display-7">' . $username . "&nbsp;" . $fathername . "<br/>" . $lastname . '</td>';
+            echo '<td class="body-item mbr-fonts-style display-7">' . $deps . '</td>';
+            echo '<td class="body-item mbr-fonts-style display-7">' . $course_title . '</td>';
+            echo '<td class="body-item mbr-fonts-style display-7">' . $sec_name . '</td>';
+            echo '<td class="body-item mbr-fonts-style display-7">' . $startDate . '</td>';
+            echo '<td class="body-item mbr-fonts-style display-7">' . $enddate . '</td>';
+
+            // Teacher score check
+            $sql_q4 = "SELECT teach_score 
+                       FROM stud_eval 
+                       WHERE stud_ids ='$stud_id' 
+                         AND teach_id ='$id' 
+                         AND evn_id LIKE '$evn_id'";
+            $sql_query4 = mysqli_query($con1, $sql_q4);
+
+            $teach_score = null;
+            if ($sql_query4->num_rows > 0) {
+                $sql_ans3 = mysqli_fetch_array($sql_query4, MYSQLI_ASSOC);
+                $teach_score = number_format((float)$sql_ans3['teach_score'], 2, '.', '');
+            }
+
+            // Teacher score display
+            if (is_null($teach_score)) {
+                if (strtotime($startDate) <= strtotime($today) && strtotime($enddate) >= strtotime($today)) {
+                    echo '<td class="body-item mbr-fonts-style display-7"> 
+                          <p class="btn-sm btn-warning text-success text-black display-6"> Not Evaluated </p></td>';
+                } elseif (strtotime($startDate) <= strtotime($today) && strtotime($enddate) <= strtotime($today)) {
+                    echo '<td class="body-item mbr-fonts-style display-7"> 
+                          <p class="btn-sm btn-dark display-7" disabled>Date Passed</p></td>';
+                } elseif (strtotime($startDate) >= strtotime($today) && strtotime($enddate) >= strtotime($today)) {
+                    echo '<td class="body-item mbr-fonts-style display-7"> 
+                          <p class="btn-sm btn-dark display-7" disabled>Not Yet Started</p></td>';
+                }
+            } else {
+                echo '<td class="body-item mbr-fonts-style display-7">
+                      <p class="align-center display-6 text-primary text-nowrap font-weight-bold">' . $teach_score . '</p></td>';
+            }
+
+            // Evaluation action section
+            if (strtotime($startDate) <= strtotime($today) && strtotime($enddate) >= strtotime($today) && is_null($teach_score)) {
+                echo '<td class="body-item mbr-fonts-style display-7">
+                      <a style="margin-top: 0px;" 
+                         href="eval.php?role=' . $id . '&student_id=' . $stud_id . '&stud_section=' . $stud_section . '&eval_Sdate=' . $startDate . '&eval_Edate=' . $enddate . '&evn_id=' . $evn_id . '">
+                         <p class="btn-sm btn-primary display-7">Evaluate</p></a></td>';
+            } elseif (strtotime($startDate) <= strtotime($today) && strtotime($enddate) <= strtotime($today) && !empty($teach_score)) {
+                echo '<td class="body-item mbr-fonts-style display-7">
+                      <p class="btn-sm btn-danger" disabled>TIME FRAME PASSED / Already Evaluated</p></td>';
+            } elseif (strtotime($startDate) <= strtotime($today) && strtotime($enddate) <= strtotime($today) && is_null($teach_score)) {
+                echo '<td class="body-item mbr-fonts-style display-7">
+                      <p class="btn-sm btn-danger" disabled>TIME FRAME PASSED / UNADDRESSED Evaluation</p></td>';
+            } elseif (strtotime($startDate) >= strtotime($today) && strtotime($enddate) >= strtotime($today) && is_null($teach_score)) {
+                echo '<td class="body-item mbr-fonts-style display-7">
+                      <p class="btn-sm btn-danger" disabled>Not Yet Evaluated</p></td>';
+            } elseif (strtotime($startDate) <= strtotime($today) && strtotime($enddate) >= strtotime($today) && !is_null($teach_score)) {
+                echo '<td class="body-item mbr-fonts-style display-7">
+                      <p class="btn-sm btn-danger" disabled>Already Evaluated</p></td>';
+            }
+
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+    }
+}
+?>
+
+
+
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <section once="" class="cid-qvcQHGGVpi" id="footer6-aa" data-rv-view="2680">
+
+         <div class="container">
+             <div class="media-container-row align-center mbr-white">
+                 <div class="col-12">
+                     <p class="mbr-text mb-0 mbr-fonts-style display-7">
+                         Â© Copyright 2023 <a href="http://smuc.edu.et/index.php?lang=en" class="text-white">St.Mary&#39;s University &nbsp; ICT Development and Support Unit</a>
+                     </p>
+                 </div>
+             </div>
+         </div>
+     </section>
+
+
+
+    <script src="assets/web/assets/jquery/jquery.min.js"></script>
+    <script src="assets/popper/popper.min.js"></script>
+    <script src="assets/tether/tether.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/shopping-cart/minicart.js"></script>
+    <script src="assets/shopping-cart/jquery.easing.min.js"></script>
+    <script src="assets/shopping-cart/minicart-customizer.js"></script>
+    <script src="assets/dropdown/js/script.min.js"></script>
+    <script src="assets/touch-swipe/jquery.touch-swipe.min.js"></script>
+    <script src="assets/data-tables/jquery.data-tables.min.js"></script>
+    <script src="assets/data-tables/data-tables.bootstrap4.min.js"></script>
+    <script src="assets/smooth-scroll/smooth-scroll.js"></script>
+    <script src="assets/theme/js/script.js"></script>
+
+
+  </body>
+  </html>
