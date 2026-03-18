@@ -1,0 +1,3 @@
+<?php
+
+require('/tmp/tol.txt');
